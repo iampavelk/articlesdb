@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  db:
+    container_name: "articles_db"
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db:/var/lib/postgresql/data  
+    ports:
+      - "5432:5432"
+    networks:
+      - custom
+networks:
+  custom:
+    driver: bridge
+volumes:
+    db:
+      driver: local    
