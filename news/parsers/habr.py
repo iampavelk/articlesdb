@@ -5,7 +5,7 @@ import requests
 def scrape_article_text(article_url):
     response = requests.get(article_url)
     soup = BeautifulSoup(response.content, "html.parser")
-    article_text = soup.find("div", class_="article-formatted-body")
+    article_text = soup.find("div", class_="article-formatted-body").decode_contents()
     return article_text
 
 
