@@ -1,18 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
+from utils import get_html
 
 
 def scrape_article_text(article_url):
-    response = requests.get(article_url)
-    soup = BeautifulSoup(response.content, "html.parser")
+    html = get_html(article_url)
+    soup = BeautifulSoup(html, "html.parser")
     article_text = soup.find("div", class_="article-formatted-body").decode_contents()
     return article_text
 
 
 URL = "https://habr.com/ru/hubs/python/articles/"
 
-results = requests.get(URL)
-page = results.content
+page = get_html(URL)
 
 soup = BeautifulSoup(page, "html.parser")
 articles = soup.find_all("article")

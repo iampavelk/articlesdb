@@ -1,4 +1,5 @@
 /venv
 /.idea
 /temp
+**/__pycache__
 poetry.lock
