@@ -6,12 +6,12 @@ class News(db.Model):
         published = db.Column(db.DateTime, nullable=False)
         text = db.Column(db.Text, nullable=True)
 """
-from sqlalchemy.orm import Mapped
-from .base import Base
+from sqlmodel import SQLModel, Field
+from datetime import datetime
 
 
-class News(Base):
-    title: Mapped[str]
-    url: Mapped[str]
-    published: Mapped[str]
-    content: Mapped[str]
+class News(SQLModel):
+    title: str
+    url: str
+    published: datetime.day
+    content: str
