@@ -5,7 +5,7 @@ class Base(DeclarativeBase):
     __abstract__ = True  # abstract table, no need to create in the DB
 
     @declared_attr.directive
-    # automaticly generated table name based on the classname + s
+    # automatically generated table name based on the classname + s
     def __tablename__(cls) -> str:
         return f"{cls.__name__.lower()}s"
 
