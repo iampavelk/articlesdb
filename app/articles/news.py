@@ -10,8 +10,12 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime
 
 
-class News(SQLModel):
+class NewsBase(SQLModel):
     title: str
     url: str
-    published: datetime.day
+    published: str
     content: str
+
+
+class News(NewsBase, table=True):
+    id: int = Field(default=None, primary_key=True)
