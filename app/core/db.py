@@ -4,10 +4,9 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app import settings
 
-db_connection_str = settings.db_async_connection_strx
-
-
-async_engine = create_async_engine(db_connection_str, echo=True, future=True)
+async_engine = create_async_engine(
+    settings.db_async_connection_str, echo=True, future=True
+)
 
 
 async def get_async_session() -> AsyncSession:
