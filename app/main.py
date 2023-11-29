@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from sqlalchemy.orm import load_only
 from sqlmodel import SQLModel, Session, select
 from fastapi.templating import Jinja2Templates
@@ -22,7 +22,7 @@ app = FastAPI(
 )
 
 # app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/front/templates")
 
 
 @app.on_event("startup")
@@ -40,12 +40,21 @@ def health_check():
 
 
 @app.get("/news/")
-def get_news():
+def get_news(request: Request):
     with Session(engine) as session:
         news = session.exec(
             select(News).options(load_only(News.title, News.url, News.published))
-        ).all()
-        return news
+        ).first()
+        print(news.title, type(news))
+        return templates.TemplateResponse(
+            "news.html",
+            context={
+                "request": request,
+                "title": news.title,
+                "url": news.url,
+                "published": news.published,
+            },
+        )
 
 
 @app.post("/news/", response_model=News)
